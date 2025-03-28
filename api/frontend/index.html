@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <title>API ANS</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+
+        <!-- Bootstrap CSS v5.2.1 -->
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+
+        <!-- vue.js -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        <!-- style -->
+        <style>
+            html, body {
+                background-color: gainsboro;
+                height: 100%;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+            }
+            main {
+                flex: 1;
+            }
+            .search-container {
+                max-width: 800px;
+                margin: 2rem auto;
+                padding: 2rem;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                border-radius: 8px;
+            }
+            .operator-card {
+                transition: all 0.3s ease;
+            }
+            .operator-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- header -->
+        <header class="bg-dark text-white p-3">
+            <div class="container">
+                <h1>Consulta de Operadoras Ativas - ANS</h1>
+            </div>
+        </header>
+
+        <!-- main -->
+        <main class="container my-4" id="app"></main>
+
+        <!-- footer -->
+        <footer class="bg-dark text-white p-3 mt-4">
+            <div class="container text-center">
+                <p class="mb-0">© 2025 Consulta ANS - Todos os direitos reservados</p>
+            </div>
+        </footer>
+
+        <!-- app -->
+        <script>
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        query: "",
+                        operators: [],
+                        loading: false,
+                        error: null,
+                        searched: false
+                    };
+                },
+                methods: {
+                    async search() {
+                        if (!this.query.trim()) {
+                            this.error = "Por favor, digite um termo para buscar";
+                            return;
+                        }
+                        
+                        this.loading = true;
+                        this.error = null;
+                        
+                        try {
+                            const response = await axios.get('http://127.0.0.1:8080/buscar/', {
+                                params: { q: this.query }
+                            });
+                            this.operators = response.data;
+                            this.searched = true;
+                        } catch (err) {
+                            this.error = "Erro ao buscar operadoras. Tente novamente mais tarde.";
+                            this.operators = [];
+                        } finally {
+                            this.loading = false;
+                        }
+                    }
+                },
+                template: `
+                    <div class="search-container bg-light">
+                        <div class="input-group mb-3">
+                            <input
+                                v-model="query" 
+                                @keyup.enter="search" 
+                                class="form-control form-control-lg" 
+                                placeholder="Digite o nome da operadora ou n/a para operadoras sem nome..."
+                            >
+                            <button @click="search" class="btn btn-primary btn-lg" :disabled="loading">
+                                <span v-if="!loading">Buscar</span>
+                                <span v-else>
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Buscando...
+                                </span>
+                            </button>
+                        </div>
+                        
+                        <div v-if="error" class="alert alert-danger mt-3">
+                            {{ error }}
+                        </div>
+                        
+                        <div v-if="operators.length === 0 && !loading && searched" class="alert alert-info mt-3">
+                            Nenhuma operadora encontrada com o termo "{{ query }}"
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6 col-lg-4 mb-3" v-for="operator in operators" :key="operator.Registro_ANS">
+                            <div class="card operator-card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ operator.Nome_Fantasia }}</h5>
+                                    <p class="card-text text-muted">
+                                        <small>
+                                            <strong>Registro ANS:</strong> {{ operator.Registro_ANS }}<br>
+                                            <strong>Razão Social:</strong> {{ operator.Razao_Social }}<br>
+                                            <strong>CNPJ:</strong> {{ operator.CNPJ }}<br>
+                                            <strong>Modalidade:</strong> {{ operator.Modalidade }}
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }); 
+            app.mount('#app');
+        </script>
+
+        <!-- Bootstrap JavaScript Libraries -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>

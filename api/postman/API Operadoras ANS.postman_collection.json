@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "9cb1fdc8-3afe-4e99-ab30-75c441e463e6",
+		"name": "API Operadoras ANS",
+		"description": "```\nColeção para teste de estágio - API de consulta de operadoras de saúde\nDesenvolvida por Glauco Sapucaia\n\n ```",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31402949"
+	},
+	"item": [
+		{
+			"name": "Buscar Operadoras",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function() {",
+							"    pm.response.to.have.jsonBody();",
+							"});",
+							"",
+							"pm.test(\"Data returned\", function() {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.be.above(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/buscar/?q=saude",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"buscar",
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "saude"
+						}
+					]
+				},
+				"description": "```\nBusca pelo termo \"saúde\".\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Operadoras - Termo 'hap'",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function() {",
+							"    pm.response.to.have.jsonBody();",
+							"});",
+							"",
+							"pm.test(\"Data returned\", function() {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.be.above(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/buscar/?q=hap",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"buscar",
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "hap"
+						}
+					]
+				},
+				"description": "```\nBusca pelo termo \"hap\".\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Operadoras - Termo 'n/a'",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON\", function() {",
+							"    pm.response.to.have.jsonBody();",
+							"});",
+							"",
+							"pm.test(\"Data returned\", function() {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.be.above(0);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/buscar/?q=n/a",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"buscar",
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "n/a"
+						}
+					]
+				},
+				"description": "```\nBusca pelo termo n/a. Adicionado como tratamento de dados.\n\n ```"
+			},
+			"response": []
+		}
+	]
+}
