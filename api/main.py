@@ -1,10 +1,10 @@
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
-import pandas as pd
+from backend import CSVDataProvider
 
 ROOT_DIR = Path(__file__).parent.resolve()
-CSV_PATH = ROOT_DIR / 'data' / 'Relatorio_cadop.csv'
+CSV_PATH = ROOT_DIR / 'backend' / 'data' / 'Relatorio_cadop.csv'
 
 app = FastAPI()
 
@@ -16,13 +16,12 @@ app.add_middleware(
     allow_headers = ['*']
 )
 
-df = pd.read_csv(CSV_PATH, delimiter=';')
-df = df.fillna('N/A')
+data_provider = CSVDataProvider(CSV_PATH)
 
 @app.get('/buscar/')
-def find_operator(q: str = Query(..., min_length=1)):
-    results = df[df['Nome_Fantasia'].str.contains(q, case=False, na=False)]
-    return results.to_dict(orient='records')
+def find_operator(q: str = Query(..., min_length=1)) -> list[dict]:
+    results = data_provider.search_operators(q)
+    return results
 
 if __name__ == '__main__':
     import uvicorn
