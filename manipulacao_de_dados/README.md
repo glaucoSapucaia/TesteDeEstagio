@@ -17,6 +17,37 @@ Este projeto depende de algumas bibliotecas para processamento e manipulação d
 - `pandas` — Para manipulação de dados em formato tabular.
 - `tabula-py` — Para extração de conteúdo do PDF.
 - `zipfile` — Para compactação do arquivo CSV.
+- `openjdk 11` — Para o uso de tabula-py.
+
+Verifique se o openjdk 11 está instalado:
+
+```bash
+java --version
+```
+
+Caso não esteja instalado, ou exita outra versão no sistema, use:
+
+Para instalação:
+
+```bash
+sudo apt install openjdk-11-jdk
+```
+
+Para selecionar a versão 11:
+
+```bash
+sudo update-alternatives --config java
+
+Existem 2 escolhas para a alternativa java (disponibiliza /usr/bin/java).
+
+  Selecção   Caminho                                      Prioridade Estado
+------------------------------------------------------------
+  0            /usr/lib/jvm/java-17-openjdk-amd64/bin/java   1711      modo automático
+* 1            /usr/lib/jvm/java-11-openjdk-amd64/bin/java   1111      modo manual
+  2            /usr/lib/jvm/java-17-openjdk-amd64/bin/java   1711      modo manual
+
+Pressione <enter> para manter a escolha actual[*], ou digite o número da selecção:
+```
 
 Instale as dependências com:
 
