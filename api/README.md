@@ -53,9 +53,12 @@ Este projeto fornece uma interface simples para consultar operadoras de saúde r
 
    ```bash
    python3 main.py
-   ```
 
-   A API estará disponível em http://127.0.0.1:8080.
+   INFO:     Started server process [37934]
+   INFO:     Waiting for application startup.
+   INFO:     Application startup complete.
+   INFO:     Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
+   ```
 
 ### Frontend
 
@@ -78,7 +81,7 @@ Para testar as rotas da API, você pode importar o arquivo `postman/API Operador
 #### Exemplo de Requisição:
 
 ```bash
-GET http://127.0.0.1:8000/buscar/?q=Unimed
+GET http://127.0.0.1:8080/buscar/?q=Unimed
 ```
 
 A resposta será um JSON com a lista de operadoras que atendem ao critério de busca.
