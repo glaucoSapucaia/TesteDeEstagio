@@ -11,7 +11,7 @@ A estrutura do projeto inclui:
 - **schema.sql**: Script para criar tabelas no banco de dados e importar dados.
 - **queries.sql**: Consultas SQL para obter informações sobre as operadoras de planos de saúde.
 - **data/**: Pasta contendo os arquivos CSV com os dados das operadoras de saúde e demonstrações contábeis.
-- **diagram/**: Pasta contendo [diagrama ERD](banco_de_dados/diagram).
+- **diagram/**: Pasta contendo diagrama ERD.
 - **README.md**: Este arquivo.
 
 ## Como usar
