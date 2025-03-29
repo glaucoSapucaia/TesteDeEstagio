@@ -18,6 +18,7 @@ Este projeto depende de algumas bibliotecas para processamento e manipulação d
 - `tabula-py` — Para extração de conteúdo do PDF.
 - `zipfile` — Para compactação do arquivo CSV.
 - `openjdk 11` — Para o uso de tabula-py.
+- `jpype1` — Para o uso de tabula-py.
 
 Verifique se o openjdk 11 está instalado:
 
@@ -25,7 +26,7 @@ Verifique se o openjdk 11 está instalado:
 java --version
 ```
 
-Caso não esteja instalado, ou exita outra versão no sistema, use:
+Caso não esteja instalado, ou exista outra versão no sistema, use:
 
 Para instalação:
 
@@ -52,7 +53,7 @@ Pressione <enter> para manter a escolha actual[*], ou digite o número da selec�
 Instale as dependências com:
 
 ```bash
-pip install pandas tabula-py
+pip install pandas tabula-py jpype1
 ```
 
 ## Como Usar
