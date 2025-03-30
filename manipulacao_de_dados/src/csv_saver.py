@@ -6,4 +6,5 @@ class CsvSaver(CSVSaverInterface):
         self.csv_path = csv_path
 
     def save_csv(self, data_frame: Any):
+        print(f"DataFrame para salvar:\n{data_frame.head()}")
         data_frame.to_csv(str(self.csv_path), index=False, header=True)

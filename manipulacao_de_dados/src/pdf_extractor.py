@@ -7,4 +7,4 @@ class PdfExtractor(PDFExtractorInterface):
         self.pdf_path = pdf_path
 
     def extract_tables(self, pages: str):
-        return tabula.read_pdf(str(self.pdf_path), pages=pages, multiple_tables=True)
+        return tabula.read_pdf(str(self.pdf_path), pages=pages, multiple_tables=True, lattice=True)
