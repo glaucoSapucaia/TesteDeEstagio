@@ -1,3 +1,4 @@
+-- Criação da tabela de operadoras de planos de saúde ativas
 CREATE TABLE operadoras_de_plano_de_saude_ativas_tb (
     registro_ans INTEGER PRIMARY KEY,
     cnpj CHAR(14),
@@ -21,6 +22,7 @@ CREATE TABLE operadoras_de_plano_de_saude_ativas_tb (
     data_registro_ans DATE
 );
 
+-- Criação da tabela de demonstrações contábeis
 CREATE TABLE demonstracoes_contabeis_tb (
     data_demonstracao DATE,
     reg_ans INTEGER,
@@ -30,9 +32,11 @@ CREATE TABLE demonstracoes_contabeis_tb (
     vl_saldo_final MONEY
 );
 
+-- Criação de índices para otimizar as consultas
 CREATE INDEX idx_operadoras ON operadoras_de_plano_de_saude_ativas_tb(registro_ans);
 CREATE INDEX idx_demonstracoes ON demonstracoes_contabeis_tb(reg_ans);
 
+-- Importação de dados da tabela de operadoras de planos de saúde ativas
 COPY operadoras_de_plano_de_saude_ativas_tb (
     registro_ans, cnpj, razao_social, nome_fantasia, modalidade,
     logradouro, numero, complemento, bairro, cidade, uf, cep,
@@ -43,6 +47,8 @@ COPY operadoras_de_plano_de_saude_ativas_tb (
 FROM '/docker-entrypoint-initdb.d/data/Relatorio_cadop.csv'
 WITH (FORMAT CSV, HEADER TRUE, DELIMITER ';', ENCODING 'UTF8');
 
+-- Importação de dados das demonstrações contábeis por trimestre
+-- Esta etapa pode ser automatizada com um script bash
 COPY demonstracoes_contabeis_tb (
     data_demonstracao, reg_ans, cd_conta_contabil,
     descricao, vl_saldo_inicial, vl_saldo_final
