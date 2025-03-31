@@ -53,26 +53,26 @@ COPY demonstracoes_contabeis_tb (
     data_demonstracao, reg_ans, cd_conta_contabil,
     descricao, vl_saldo_inicial, vl_saldo_final
 )
-FROM '/docker-entrypoint-initdb.d/data/ANS_demonstracao_contabil/2024/1T2024.csv'
+FROM '/docker-entrypoint-initdb.d/data/ANS_demonstracao_contabil/2024/normalized1T2024.csv'
 WITH (FORMAT CSV, HEADER TRUE, DELIMITER ';', ENCODING 'UTF8');
 
 COPY demonstracoes_contabeis_tb (
     data_demonstracao, reg_ans, cd_conta_contabil,
     descricao, vl_saldo_inicial, vl_saldo_final
 )
-FROM '/docker-entrypoint-initdb.d/data/ANS_demonstracao_contabil/2024/2T2024.csv'
+FROM '/docker-entrypoint-initdb.d/data/ANS_demonstracao_contabil/2024/normalized2T2024.csv'
 WITH (FORMAT CSV, HEADER TRUE, DELIMITER ';', ENCODING 'UTF8');
 
 COPY demonstracoes_contabeis_tb (
     data_demonstracao, reg_ans, cd_conta_contabil,
     descricao, vl_saldo_inicial, vl_saldo_final
 )
-FROM '/docker-entrypoint-initdb.d/data/ANS_demonstracao_contabil/2024/3T2024.csv'
+FROM '/docker-entrypoint-initdb.d/data/ANS_demonstracao_contabil/2024/normalized3T2024.csv'
 WITH (FORMAT CSV, HEADER TRUE, DELIMITER ';', ENCODING 'UTF8');
 
 COPY demonstracoes_contabeis_tb (
     data_demonstracao, reg_ans, cd_conta_contabil,
     descricao, vl_saldo_inicial, vl_saldo_final
 )
-FROM '/docker-entrypoint-initdb.d/data/ANS_demonstracao_contabil/2024/4T2024.csv'
+FROM '/docker-entrypoint-initdb.d/data/ANS_demonstracao_contabil/2024/normalized4T2024.csv'
 WITH (FORMAT CSV, HEADER TRUE, DELIMITER ';', ENCODING 'UTF8');

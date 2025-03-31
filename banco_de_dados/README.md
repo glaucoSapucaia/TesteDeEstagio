@@ -12,6 +12,7 @@ A estrutura do projeto inclui:
 - **queries.sql**: Consultas SQL para obter informações sobre as operadoras de planos de saúde.
 - **data/**: Pasta contendo os arquivos CSV com os dados das operadoras de saúde e demonstrações contábeis.
 - **diagram/**: Pasta contendo diagrama ERD.
+- **util/normalizator.py**: Normaliza dados monetários da tabela.
 - **README.md**: Este arquivo.
 
 ## Como usar
@@ -70,14 +71,14 @@ Acesse o banco de dados
 Depois de acessar o banco de dados, você pode executar as consultas SQL fornecidas no arquivo `queries.sql`. Por exemplo, para descobrir as 10 operadoras com maiores despesas no último trimestre, execute a consulta SQL no PostgreSQL:
 
 ```sql
-SELECT o.nome_fantasia, o.cnpj,
-    SUM(d.vl_saldo_final) AS total_despesa
+SELECT COALESCE(o.nome_fantasia, o.razao_social) as operadora, o.cnpj,
+    SUM(d.vl_saldo_final / 1000) AS total_despesa
 FROM demonstracoes_contabeis_tb d
 JOIN operadoras_de_plano_de_saude_ativas_tb o
     ON d.reg_ans = o.registro_ans
 WHERE d.descricao = 'EVENTOS/ SINISTROS CONHECIDOS OU AVISADOS  DE ASSISTÊNCIA A SAÚDE MEDICO HOSPITALAR '
     AND d.data_demonstracao BETWEEN '2024-10-01' AND '2024-12-31'
-GROUP BY o.nome_fantasia, o.cnpj
+GROUP BY COALESCE(o.nome_fantasia, o.razao_social), o.cnpj
 ORDER BY total_despesa DESC
 LIMIT 10;
 ```
@@ -106,22 +107,22 @@ Aqui estão exemplos de respostas para as consultas SQL:
 #### Consulta 1: Operadoras com maiores despesas no último trimestre
 
 ```sql
-nome_fantasia              | cnpj               | total_despesa
---------------------------+--------------------+------------------------
-BRADESCO SAUDE S.A.       | 92693118000160     | $3,089,592,678,705.00
-AMIL                      | 29309127000179     | $1,384,524,317,274.00
-HAPVIDA                   | 63554067000198     | $774,180,090,436.00
+               operadora               |      cnpj      | total_despesa  
+---------------------------------------+----------------+----------------
+ BRADESCO SAUDE S.A.                   | 92693118000160 | $30,941,701.60
+ SUL AMERICA COMPANHIA DE SEGURO SAÚDE | 01685053000156 | $21,124,940.41
+ AMIL                                  | 29309127000179 | $20,820,818.06
 ...
 ```
 
 #### Consulta 2: Operadoras com maiores despesas no último ano
 
 ```sql
-nome_fantasia              | cnpj               | total_despesa
---------------------------+--------------------+------------------------
-BRADESCO SAUDE S.A.       | 92693118000160     | $7,741,706,935,544.00
-AMIL                      | 29309127000179     | $4,292,023,882,206.00
-HAPVIDA                   | 63554067000198     | $1,910,691,055,906.00
+               operadora               |      cnpj      |   total_despesa    
+---------------------------------------+----------------+--------------------
+ BRADESCO SAUDE S.A.                   | 92693118000160 | $77,467,609,279.79
+ SUL AMERICA COMPANHIA DE SEGURO SAÚDE | 01685053000156 | $51,812,853,068.58
+ AMIL                                  | 29309127000179 | $51,005,557,507.35
 ...
 ```
 
